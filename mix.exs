@@ -2,13 +2,17 @@ defmodule Avrolixr.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :avrolixr,
-     version: "0.1.0",
-     elixir: "~> 1.3",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     dialyzer: [plt_add_deps: :transitive, plt_file: ".local.plt"],
-     deps: deps()]
+    [
+      app: :avrolixr,
+      build_embedded: Mix.env == :prod,
+      deps: deps(),
+      description: description(),
+      dialyzer: [plt_add_deps: :transitive, plt_file: ".local.plt"],
+      elixir: "~> 1.3",
+      package: package(),
+      start_permanent: Mix.env == :prod,
+      version: "0.1.0",
+   ]
   end
 
   def application do
@@ -30,13 +34,13 @@ defmodule Avrolixr.Mixfile do
     ]
   end
 
-  def description do
+  defp description do
     """
     An Elixir wrapper for the `erlavro` Avro package.
     """
   end
 
-  def package do
+  defp package do
     [
       name: :avrolixr,
       files: ["lib", "mix.exs", "CHANGELOG.md", "README.md", "LICENSE.txt"],
