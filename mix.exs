@@ -48,7 +48,7 @@ defmodule Avrolixr.Mixfile do
       maintainers: ["Donald Plummer", "John Fearnside"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/avvo/avrolixr",
-               "Docs" => "https://github.com/avvo/avrolixr"}
+               "Docs" => "https://hexdocs.pm/avrolixr"}
     ]
   end
 end
