@@ -32,6 +32,7 @@ defmodule Avrolixr.Codec do
     do_encode(v, schema_json, type, msg)
   end
 
+  @spec round_trip(value_t, schema_t, type_t, list) :: {:ok, value_t} | error_t
   def round_trip(v, schema_json, type, opts \\ []) do
     with {:ok, v_avro} <- encode(v, schema_json, type, opts), do: decode(v_avro)
   end
@@ -44,16 +45,19 @@ defmodule Avrolixr.Codec do
     end
   end
 
+  @spec encode!(value_t, schema_t, type_t, list) :: avro_t
   def encode!(v, schema_json, type, opts \\ []) do
     {:ok, v_avro} = v |> encode(schema_json, type, opts)
     v_avro
   end
 
+  @spec decode!(avro_t) :: value_t
   def decode!(v_avro) do
     {:ok, v} = decode(v_avro)
     v
   end
 
+  @spec round_trip!(value_t, schema_t, type_t, list) :: value_t
   def round_trip!(v, schema_json, type, opts \\ []) do
     {:ok, v_after} = v |> round_trip(schema_json, type, opts)
     v_after

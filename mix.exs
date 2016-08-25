@@ -7,6 +7,7 @@ defmodule Avrolixr.Mixfile do
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     dialyzer: [plt_add_deps: :transitive, plt_file: ".local.plt"],
      deps: deps()]
   end
 
@@ -23,6 +24,7 @@ defmodule Avrolixr.Mixfile do
 
   defp deps do
     [
+      {:dialyxir, "~> 0.3.5", only: [:dev]},
       {:erlavro, git: "https://github.com/avvo/erlavro"},
       {:poison, "~> 2.0"},
     ]
