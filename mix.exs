@@ -29,4 +29,21 @@ defmodule Avrolixr.Mixfile do
       {:poison, "~> 2.0"},
     ]
   end
+
+  def description do
+    """
+    An Elixir wrapper for the `erlavro` Avro package.
+    """
+  end
+
+  def package do
+    [
+      name: :avrolixr,
+      files: ["lib", "mix.exs", "CHANGELOG.md", "README.md", "LICENSE.txt"],
+      maintainers: ["Donald Plummer", "John Fearnside"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/avvo/avrolixr",
+               "Docs" => "https://github.com/avvo/avrolixr"}
+    ]
+  end
 end
