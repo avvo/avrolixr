@@ -10,17 +10,10 @@ defmodule Avrolixr.Codec do
 
   @spec decode(avro_t) :: {:ok, value_t} | error_t
   def decode(v_avro) do
-    with tuple <- :avro_ocf.decode_stream(ocf_schema, v_avro),
-         {[{'magic', _}, {'meta', meta}, {'sync', sync}], tail} <- tuple,
-         schema_json <- meta
-           |> Enum.at(1)
-           |> elem(1),
-         {schema, store} <- make_schema_and_store(schema_json),
-         v <- store
-           |> :avro_ocf.decode_blocks(schema, sync, tail, [])
-           |> hd
-           |> Pairs.to_map do
-      {:ok, v}
+    case decode_stream(v_avro) do
+      { [ {'magic', _}, {'meta', [_, {_, schema_json}]}, {'sync', sync} ], tail } ->
+        {:ok, decode_blocks(schema_json, sync, tail) |> hd |> Pairs.to_map}
+      error -> {:error, "Could not decode binary stream, got #{inspect error}"}
     end
   end
 
@@ -64,7 +57,8 @@ defmodule Avrolixr.Codec do
   end
 
   defp do_encode(v, schema_json, type, true) do
-    {store, hdr, sync} = make_store_hdr_and_sync(schema_json)
+    store = make_store(schema_json)
+    {hdr, sync} = make_hdr_and_sync(schema_json)
 
     term = v
       |> Json.encode!
@@ -82,24 +76,24 @@ defmodule Avrolixr.Codec do
   end
   defp do_encode(_, _, _, msg), do: {:error, msg}
 
-  defp make_store_hdr_and_sync(schema_json) do
-    {schema, store} = make_schema_and_store(schema_json)
+  defp make_hdr_and_sync(schema_json) do
+    schema = make_schema(schema_json)
 
     {:header, magic, meta, sync} = :avro_ocf.make_header(schema)
-    x = [{'magic', magic}, {'meta', meta}, {'sync', sync}]
 
-    hdr = :avro_record.new(ocf_schema, x)
+    hdr = :avro_record.new(ocf_schema(), [{'magic', magic}, {'meta', meta}, {'sync', sync}])
       |> :avro_binary_encoder.encode_value
       |> :erlang.list_to_binary
 
-    {store, hdr, sync}
+    {hdr, sync}
   end
 
-  defp make_schema_and_store(schema_json) do
-    {
-      :avro_json_decoder.decode_schema(schema_json),
-      :avro_schema_store.import_schema_json(schema_json, :avro_schema_store.new)
-    }
+  defp make_schema(schema_json) do
+    :avro_json_decoder.decode_schema(schema_json)
+  end
+
+  defp make_store(schema_json) do
+    :avro_schema_store.import_schema_json(schema_json, :avro_schema_store.new)
   end
 
   defp encode_long(long) do
@@ -109,4 +103,11 @@ defmodule Avrolixr.Codec do
   defp encode_bytes(bytes), do: encode_long(byte_size(bytes)) ++ [bytes]
 
   defp ocf_schema, do: :avro_ocf.ocf_schema
+
+  defp decode_stream(v_avro), do: :avro_ocf.decode_stream(ocf_schema(), v_avro)
+
+  defp decode_blocks(schema_json, sync, tail) do
+    :avro_ocf.decode_blocks(make_store(schema_json), make_schema(schema_json), sync, tail, [])
+  end
+
 end
