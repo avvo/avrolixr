@@ -1,0 +1,16 @@
+{
+  "protocol" : "P",
+  "namespace" : "N",
+  "doc" : "P documentation",
+  "types" : [ {
+    "type" : "record",
+    "name" : "R",
+    "doc" : "R documentation",
+    "fields" : [ {
+      "name" : "f",
+      "type" : [ "int", "null" ],
+      "doc" : "f documentation"
+    } ]
+  } ],
+  "messages" : { }
+}

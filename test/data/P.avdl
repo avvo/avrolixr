@@ -1,0 +1,40 @@
+@namespace("N")
+/** P documentation */
+protocol P {
+  /** R documentation */
+  record R {
+    /** f documentation */
+    union { int, null } f;
+  }
+}
+
+/*
+  TO GENERATE OTHER FILES:
+
+  $ brew install avro-tools # if needed
+  $ cd test/avro
+  $ avro-tools idl P.avdl P.avpr                                     # protocol
+  $ avro-tools idl2schemata P.avdl .                                 # schemas
+  $ avro-tools random --schema-file=R.avsc --count=1 R_random.avro   # encoded
+  $ avro-tools tojson --pretty R_random.avro > R_random.json         # decoded
+
+  VERIFY AVRO-TOOLS ROUND-TRIP
+
+  $ avro-tools fromjson --schema-file R.avsc R_random.json
+  $ avro-tools tojson --pretty R_random.avro
+
+  COPY R_random.json, THEN MANUALLY EDIT
+
+  $ cp R_random.json R_0.json
+  $ cp R_random.json R_null.json
+
+  GENERATE ENCODED TEST FILES, VERIFY NO ERRORS
+
+  $ avro-tools fromjson --schema-file R.avsc R_0.json > R_0.avro
+  $ avro-tools fromjson --schema-file R.avsc R_null.json > R_null.avro
+
+  VERIFY ROUND-TRIP
+
+  $ avro-tools tojson --pretty R_0.avro
+  $ avro-tools tojson --pretty R_null.avro
+*/

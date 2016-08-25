@@ -1,0 +1,11 @@
+{
+  "type" : "record",
+  "name" : "R",
+  "namespace" : "N",
+  "doc" : "R documentation",
+  "fields" : [ {
+    "name" : "f",
+    "type" : [ "int", "null" ],
+    "doc" : "f documentation"
+  } ]
+}
