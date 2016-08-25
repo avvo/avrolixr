@@ -4,7 +4,7 @@ Wrapper around [erlavro](https://github.com/avvo/erlavro) library for Elixir.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+[Available in Hex](https://hex.pm/packages/avrolixr), the package can be installed as:
 
   1. Add `avrolixr` to your list of dependencies in `mix.exs`:
 
