@@ -10,6 +10,7 @@ defmodule Avrolixr do
     children = [
       # Starts a worker by calling: Avrolixr.Worker.start_link(arg1, arg2, arg3)
       # worker(Avrolixr.Worker, [arg1, arg2, arg3]),
+      worker(Avrolixr.Store, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

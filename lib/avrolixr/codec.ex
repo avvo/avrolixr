@@ -93,7 +93,7 @@ defmodule Avrolixr.Codec do
   end
 
   defp make_store(schema_json) do
-    :avro_schema_store.import_schema_json(schema_json, :avro_schema_store.new)
+    Avrolixr.Store.import_schema(schema_json)
   end
 
   defp encode_long(long) do
