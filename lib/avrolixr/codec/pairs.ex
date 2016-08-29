@@ -6,9 +6,6 @@ defmodule Avrolixr.Codec.Pairs do
   @type map_key_t :: String.t
   @type map_value_t :: any
 
-#  @spec from_map(map) :: t
-#  def from_map(_), do: [] # TODO
-
   @spec to_map(t) :: map
   def to_map(pairs), do: to_map(%{}, pairs)
 
@@ -24,10 +21,15 @@ defmodule Avrolixr.Codec.Pairs do
   defp key_to_map_key(k), do: k |> to_string
 
   @spec value_to_map_value(value_t) :: map_value_t
-  defp value_to_map_value(''), do: "" # TODO: differentiate between '' and [] possible?
+  defp value_to_map_value(''), do: ""
   defp value_to_map_value(v) when is_list(v), do: list_to_map_value(hd(v), v)
   defp value_to_map_value(v), do: v
 
   defp list_to_map_value(h, list) when is_number(h), do: to_string(list)
-  defp list_to_map_value(_, list) when is_list(list), do: to_map(list)
+  defp list_to_map_value(_, list) when is_list(list) do
+    case list do
+      [{_, _} | _] -> to_map(list)
+      _ -> list |> Enum.map(&value_to_map_value/1)
+    end
+  end
 end

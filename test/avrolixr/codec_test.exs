@@ -4,7 +4,6 @@ defmodule Avrolixr.CodecTest do
 
   alias Avrolixr.Codec
   alias Avrolixr.Codec.Json
-  alias Avrolixr.Codec.Pairs
 
   describe "encode/decode round trip," do
     setup do
@@ -127,64 +126,6 @@ defmodule Avrolixr.CodecTest do
     end
   end
 
-  describe "Pairs.to_map," do
-    test "flat" do
-      map = %{"app_id" => "a", "name" => "n", "timestamp" => 0}
-      avro = [{'name', 'n'}, {'timestamp', 0}, {'app_id', 'a'}]
-      assert Pairs.to_map(avro) == map
-    end
-
-    test "nested," do
-      map = %{
-        "event" => %{"app_id" => "a", "name" => "n", "timestamp" => 0},
-        "lawyer_id" => 0
-      }
-      avro = [
-        {'event', [{'name', 'n'}, {'timestamp', 0}, {'app_id', 'a'}]},
-        {'lawyer_id', 0}
-      ]
-      assert Pairs.to_map(avro) == map
-    end
-
-    test "nil" do
-      assert Pairs.to_map([{'a', nil}]) == %{"a" => nil}
-    end
-
-    test "bool" do
-      assert Pairs.to_map([{'a', true}]) == %{"a" => true}
-    end
-
-    test "number" do
-      assert Pairs.to_map([{'a', 0}]) == %{"a" => 0}
-    end
-
-    @tag :skip
-    test "empty string" do
-      assert Pairs.to_map([{'a', ''}]) == %{"a" => ""}
-    end
-
-    test "string" do
-      assert Pairs.to_map([{'a', 'a'}]) == %{"a" => "a"}
-    end
-
-    @tag :skip
-    test "empty list" do
-      assert Pairs.to_map([{'a', []}]) == %{"a" => []}
-    end
-
-    @tag :skip
-    test "list" do
-      assert Pairs.to_map([{'a', [0]}]) == %{"a" => [0]}
-    end
-
-    test "empty map" do
-      assert Pairs.to_map([{'a', %{}}]) == %{"a" => %{}}
-    end
-
-    test "map" do
-      assert Pairs.to_map([{'a', %{"a" => 1}}]) == %{"a" => %{"a" => 1}}
-    end
-  end
 
   describe "Json.robust?," do
     test "numbers are robust", do: assert Json.robust?(0) == true
