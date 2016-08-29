@@ -30,6 +30,12 @@ defmodule Avrolixr.CodecTest do
         |> Codec.round_trip!(schema_json, type, strict: true)
       assert v_after == v_canonical
     end
+
+    test "does not leak ets tables", %{sj: schema_json, t: type, v: v} do
+      initial_ets_count = :ets.all |> length
+      Codec.round_trip!(v, schema_json, type)
+      assert (:ets.all |> length) == initial_ets_count
+    end
   end
 
   describe ~s(schema w/union: "type" : [ "int", "null" ],) do
