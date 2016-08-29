@@ -11,7 +11,7 @@ defmodule Avrolixr.Mixfile do
       elixir: "~> 1.3",
       package: package(),
       start_permanent: Mix.env == :prod,
-      version: "0.1.0",
+      version: "0.1.1",
    ]
   end
 
