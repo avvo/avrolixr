@@ -1,6 +1,6 @@
 %{"dialyxir": {:hex, :dialyxir, "0.3.5", "eaba092549e044c76f83165978979f60110dc58dd5b92fd952bf2312f64e9b14", [:mix], []},
   "earmark": {:hex, :earmark, "1.0.1", "2c2cd903bfdc3de3f189bd9a8d4569a075b88a8981ded9a0d95672f6e2b63141", [:mix], []},
-  "erlavro": {:git, "https://github.com/avvo/erlavro", "9fa90757ee4053b0ae2ce6e9ecb5e155e0914910", []},
+  "erlavro": {:git, "https://github.com/avvo/erlavro", "64b8e2e8fc117dd49cf65e8719b90bf82b8672ec", []},
   "ex_doc": {:hex, :ex_doc, "0.13.0", "aa2f8fe4c6136a2f7cfc0a7e06805f82530e91df00e2bff4b4362002b43ada65", [:mix], [{:earmark, "~> 1.0", [hex: :earmark, optional: false]}]},
   "jsonx": {:git, "https://github.com/iskra/jsonx.git", "9c95948c6835827ed61a9506ae4a9aba61acf335", [branch: "master"]},
   "mochijson3": {:git, "https://github.com/tophitpoker/mochijson3.git", "1a1c913ac80bb45d3de5fbd74d21e96c45e9e844", [branch: "master"]},
