@@ -57,22 +57,23 @@ defmodule Avrolixr.Codec do
   end
 
   defp do_encode(v, schema_json, type, true) do
-    store = make_store(schema_json)
-    {hdr, sync} = make_hdr_and_sync(schema_json)
+    with_store(schema_json, fn store ->
+      {hdr, sync} = make_hdr_and_sync(schema_json)
 
-    term = v
-      |> Json.encode!
-      |> :avro_json_decoder.decode_value(type, store, [{:is_wrapped, false}, {:json_decoder, :mochijson3}])
+      term = v
+        |> Json.encode!
+        |> :avro_json_decoder.decode_value(type, store, [{:is_wrapped, false}, {:json_decoder, :mochijson3}])
 
-    bytes = :avro_binary_encoder.encode(store, type, term)
-      |> :erlang.iolist_to_binary
+      bytes = :avro_binary_encoder.encode(store, type, term)
+        |> :erlang.iolist_to_binary
 
-    io_data = encode_long(1) ++ encode_bytes(bytes) ++ [sync]
+      io_data = encode_long(1) ++ encode_bytes(bytes) ++ [sync]
 
-    data_bytes = io_data
-      |> :erlang.list_to_binary
+      data_bytes = io_data
+        |> :erlang.list_to_binary
 
-    {:ok, hdr <> data_bytes}
+      {:ok, hdr <> data_bytes}
+    end)
   end
   defp do_encode(_, _, _, msg), do: {:error, msg}
 
@@ -92,8 +93,13 @@ defmodule Avrolixr.Codec do
     :avro_json_decoder.decode_schema(schema_json)
   end
 
-  defp make_store(schema_json) do
-    :avro_schema_store.import_schema_json(schema_json, :avro_schema_store.new)
+  defp with_store(schema_json, func) do
+    store = :avro_schema_store.import_schema_json(schema_json, :avro_schema_store.new)
+    try do
+      func.(store)
+    after
+      :avro_schema_store.close(store)
+    end
   end
 
   defp encode_long(long) do
@@ -107,7 +113,8 @@ defmodule Avrolixr.Codec do
   defp decode_stream(v_avro), do: :avro_ocf.decode_stream(ocf_schema(), v_avro)
 
   defp decode_blocks(schema_json, sync, tail) do
-    :avro_ocf.decode_blocks(make_store(schema_json), make_schema(schema_json), sync, tail, [])
+    with_store(schema_json, fn store ->
+      store |> :avro_ocf.decode_blocks(make_schema(schema_json), sync, tail, [])
+    end)
   end
-
 end
