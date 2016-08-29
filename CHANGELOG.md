@@ -5,6 +5,9 @@ CHANGELOG inspiration from http://keepachangelog.com/.
 
 ## Unreleased
 
+## [0.1.2] - August 29, 2016
+* Fix bug in map encoder for lists of strings
+
 ## [0.1.1] - August 29, 2016
 * Close the store after we're done with it so we don't leak ETS tables.
 
