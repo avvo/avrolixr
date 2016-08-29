@@ -46,7 +46,7 @@ pull request.
 1. The version.rb file should only ever be updated in master, don't update it in your branch.
 2. Once changes have been merged to master:
 3. Update CHANGELOG.md and version.rb file with new version. Commit as "Bump version".
-4. Run `rake release`, which will create a git tag for the version, push git commits and tags.
+4. Run `mix hex.publish`, which will push to hex.pm.
 
 ## License
 
