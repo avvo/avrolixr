@@ -29,7 +29,7 @@ defmodule Avrolixr.Mixfile do
   defp deps do
     [
       {:dialyxir, "~> 0.3.5", only: [:dev]},
-      {:erlavro, git: "https://github.com/avvo/erlavro"},
+      {:erlavro, git: "https://github.com/avvo/erlavro", ref: "fb7c7f0"},
       {:ex_doc, ">= 0.0.0", only: [:dev]},
       {:poison, "~> 2.0"},
     ]

@@ -7,7 +7,7 @@ defmodule Avrolixr.PairsTest do
   describe "Pairs.to_map," do
     test "flat" do
       map = %{"app_id" => "a", "name" => "n", "timestamp" => 0}
-      avro = [{'name', 'n'}, {'timestamp', 0}, {'app_id', 'a'}]
+      avro = [{'name', "n"}, {'timestamp', 0}, {'app_id', "a"}]
       assert Pairs.to_map(avro) == map
     end
 
@@ -17,7 +17,7 @@ defmodule Avrolixr.PairsTest do
         "lawyer_id" => 0
       }
       avro = [
-        {'event', [{'name', 'n'}, {'timestamp', 0}, {'app_id', 'a'}]},
+        {'event', [{'name', "n"}, {'timestamp', 0}, {'app_id', "a"}]},
         {'lawyer_id', 0}
       ]
       assert Pairs.to_map(avro) == map
@@ -41,7 +41,7 @@ defmodule Avrolixr.PairsTest do
     end
 
     test "string" do
-      assert Pairs.to_map([{'a', 'a'}]) == %{"a" => "a"}
+      assert Pairs.to_map([{'a', "a"}]) == %{"a" => "a"}
     end
 
     @tag :skip
@@ -65,11 +65,11 @@ defmodule Avrolixr.PairsTest do
     test "list of strings" do
       list = [{'id', 2696047},
         {'updated_attributes',
-          ['specialty_id', 'specialty_id_updated_by', 'specialty_id_updated_at',
-            'updated_at']},
+          ["specialty_id", "specialty_id_updated_by", "specialty_id_updated_at",
+            "updated_at"]},
         {'event',
-          [{'name', 'QuestionUpdated'}, {'timestamp', 1472501025},
-            {'app_id', 'content'}]}]
+          [{'name', "QuestionUpdated"}, {'timestamp', 1472501025},
+            {'app_id', "content"}]}]
       map = %{
         "id" => 2696047,
         "updated_attributes" => ["specialty_id", "specialty_id_updated_by",
@@ -79,6 +79,20 @@ defmodule Avrolixr.PairsTest do
           "timestamp" => 1472501025,
           "app_id" => "content",
         }
+      }
+      assert Pairs.to_map(list) == map
+    end
+
+    test "list of integers" do
+      list = [
+        {'thing_ids', [1,2,3]},
+        {'foo_ids', [90_001, 90_002, 123123123]},
+        {'bar_names', ["cat", "bat", "fat", "mat"]}
+      ]
+      map = %{
+        "thing_ids" => [1,2,3],
+        "foo_ids" => [90_001, 90_002, 123123123],
+        "bar_names" => ["cat", "bat", "fat", "mat"]
       }
       assert Pairs.to_map(list) == map
     end

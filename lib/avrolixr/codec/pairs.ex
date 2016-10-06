@@ -25,7 +25,6 @@ defmodule Avrolixr.Codec.Pairs do
   defp value_to_map_value(v) when is_list(v), do: list_to_map_value(hd(v), v)
   defp value_to_map_value(v), do: v
 
-  defp list_to_map_value(h, list) when is_number(h), do: to_string(list)
   defp list_to_map_value(_, list) when is_list(list) do
     case list do
       [{_, _} | _] -> to_map(list)
