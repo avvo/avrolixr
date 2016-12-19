@@ -10,7 +10,10 @@ Wrapper around [erlavro](https://github.com/avvo/erlavro) library for Elixir.
 
     ```elixir
     def deps do
-      [{:avrolixr, "~> 0.1.0"}]
+      [
+        {:avrolixr, "~> 0.1.0"},
+        {:erlavro, git: "https://github.com/avvo/erlavro"},
+      ]
     end
     ```
 
@@ -18,7 +21,7 @@ Wrapper around [erlavro](https://github.com/avvo/erlavro) library for Elixir.
 
     ```elixir
     def application do
-      [applications: [:avrolixr]]
+      [applications: [:avrolixr, :erlavro]]
     end
     ```
 

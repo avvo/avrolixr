@@ -28,7 +28,8 @@ defmodule Avrolixr.Mixfile do
 
   defp deps do
     [
-      {:erlavro, git: "https://github.com/avvo/erlavro", ref: "fb7c7f0"},
+      # So that it can be published to Hex
+      {:erlavro, git: "https://github.com/avvo/erlavro", ref: "fb7c7f0", only: [:dev]},
       {:poison, "~> 2.0"},
       # NON-PRODUCTION DEPS
       {:dialyxir, "~> 0.4", only: [:dev]},
