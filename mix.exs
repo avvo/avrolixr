@@ -8,10 +8,10 @@ defmodule Avrolixr.Mixfile do
       deps: deps(),
       description: description(),
       dialyzer: [plt_add_deps: :transitive, plt_file: ".local.plt"],
-      elixir: "~> 1.3",
+      elixir: "~> 1.4",
       package: package(),
       start_permanent: Mix.env == :prod,
-      version: "0.2.0"
+      version: "0.4.1"
    ]
   end
 
@@ -30,7 +30,8 @@ defmodule Avrolixr.Mixfile do
     [
       # So that it can be published to Hex
       {:erlavro, git: "https://github.com/avvo/erlavro", ref: "fb7c7f0", only: [:dev]},
-      {:poison, "~> 2.0"},
+      {:poison, "~> 3.1"},
+
       # NON-PRODUCTION DEPS
       {:dialyxir, "~> 0.4", only: [:dev]},
       {:ex_doc, ">= 0.0.0", only: [:dev]}
@@ -45,14 +46,14 @@ defmodule Avrolixr.Mixfile do
 
   defp package do
     [
-      name: :avrolixr,
       files: ["lib", "mix.exs", "CHANGELOG.md", "README.md", "LICENSE.txt"],
-      maintainers: ["Donald Plummer", "John Fearnside"],
       licenses: ["MIT"],
       links: %{
         "GitHub" => "https://github.com/avvo/avrolixr",
         "Docs" => "https://hexdocs.pm/avrolixr"
-      }
+      },
+      maintainers: ["Donald Plummer", "John Fearnside"],
+      name: :avrolixr
     ]
   end
 end
