@@ -7,9 +7,9 @@ defmodule Avrolixr.CodecTest do
 
   describe "encode/decode round trip," do
     setup do
-      schema_path = "test/data/AvvoProAdded.avsc"
+      schema_path = "test/data/TestEvent.avsc"
       {:ok, schema_json} = File.read(schema_path)
-      type = 'AvvoEvent.AvvoProAdded'
+      type = 'TestNamespace.TestEvent'
       v = %{event: %{app_id: "a", name: "n", timestamp: 0}, lawyer_id: 0}
       v_canonical = %{
         "event" => %{"app_id" => "a", "name" => "n", "timestamp" => 0},

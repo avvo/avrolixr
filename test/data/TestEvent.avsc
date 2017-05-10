@@ -1,8 +1,8 @@
 {
   "type" : "record",
-  "name" : "AvvoProAdded",
-  "namespace" : "AvvoEvent",
-  "doc" : "The payload for an avvo pro added event, fired when a professional becomes AvvoPro",
+  "name" : "TestEvent",
+  "namespace" : "TestNamespace",
+  "doc" : "The payload",
   "fields" : [ {
     "name" : "event",
     "type" : {
