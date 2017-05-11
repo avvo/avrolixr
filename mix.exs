@@ -25,7 +25,7 @@ defmodule Avrolixr.Mixfile do
     [
       # So that it can be published to Hex
       {:erlavro, git: "https://github.com/avvo/erlavro", ref: "fb7c7f0"},
-      {:poison, "~> 2.0"},
+      {:poison, "~> 3.1"},
       # NON-PRODUCTION DEPS
       {:dialyxir, "~> 0.5", only: [:dev]},
       {:ex_doc, "~> 0.15", only: [:dev]}
