@@ -11,29 +11,24 @@ defmodule Avrolixr.Mixfile do
       elixir: "~> 1.3",
       package: package(),
       start_permanent: Mix.env == :prod,
-      version: "0.2.0"
+      version: "0.2.1"
    ]
   end
 
   def application do
     [
-      mod: {Avrolixr, []},
-      applications: [
-        :erlavro,
-        :mochijson3,
-        :poison
-      ]
+      mod: {Avrolixr, []}
     ]
   end
 
   defp deps do
     [
       # So that it can be published to Hex
-      {:erlavro, git: "https://github.com/avvo/erlavro", ref: "fb7c7f0", only: [:dev]},
+      {:erlavro, git: "https://github.com/avvo/erlavro", ref: "fb7c7f0"},
       {:poison, "~> 2.0"},
       # NON-PRODUCTION DEPS
-      {:dialyxir, "~> 0.4", only: [:dev]},
-      {:ex_doc, ">= 0.0.0", only: [:dev]}
+      {:dialyxir, "~> 0.5", only: [:dev]},
+      {:ex_doc, "~> 0.15", only: [:dev]}
     ]
   end
 
@@ -46,9 +41,9 @@ defmodule Avrolixr.Mixfile do
   defp package do
     [
       name: :avrolixr,
-      files: ["lib", "mix.exs", "CHANGELOG.md", "README.md", "LICENSE.txt"],
+      files: ~w[lib mix.exs CHANGELOG.md README.md LICENSE.txt],
       maintainers: ["Donald Plummer", "John Fearnside"],
-      licenses: ["MIT"],
+      licenses: ~w[MIT],
       links: %{
         "GitHub" => "https://github.com/avvo/avrolixr",
         "Docs" => "https://hexdocs.pm/avrolixr"
