@@ -17,19 +17,14 @@ defmodule Avrolixr.Mixfile do
 
   def application do
     [
-      mod: {Avrolixr, []},
-      applications: [
-        :erlavro,
-        :mochijson3,
-        :poison
-      ]
+      mod: {Avrolixr, []}
     ]
   end
 
   defp deps do
     [
       # So that it can be published to Hex
-      {:erlavro, git: "https://github.com/avvo/erlavro", ref: "fb7c7f0", only: [:dev]},
+      {:erlavro, git: "https://github.com/avvo/erlavro", ref: "fb7c7f0"},
       {:poison, "~> 2.0"},
       # NON-PRODUCTION DEPS
       {:dialyxir, "~> 0.4", only: [:dev]},
